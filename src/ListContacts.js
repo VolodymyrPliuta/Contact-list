@@ -17,6 +17,10 @@ import sortBy from 'sort-by'
       this.setState({query: query.trim() }) 
     }
 
+    clearQuery = () => {
+      this.setState({query: ''})
+    }
+
     render() {
       const {contacts, onDeleteContact} = this.props
       const {query} = this.state
@@ -32,7 +36,6 @@ import sortBy from 'sort-by'
 
       return (
         <div className='list-contacts'>
-          {JSON.stringify(this.state)}
           <div className='list-contacts-top'>
             <input
               className='search-contacts'
@@ -42,6 +45,14 @@ import sortBy from 'sort-by'
               onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
+
+          {showingContacts.length !== contacts.length && (
+            <div>
+              <span>Now showing {showingContacts.length} of {contacts.length} total</span>
+              <button onClick={this.clearQuery}>Show all</button>
+            </div>
+          )}
+
           <ol className='contact-list'>
             {showingContacts.map((contact) => (
               <li key={contact.id} className='contact-list-item'>
